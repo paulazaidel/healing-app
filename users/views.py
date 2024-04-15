@@ -6,8 +6,9 @@ from django.contrib.messages import constants, add_message
 
 
 def logout(request):
-        auth_logout(request)
-        return redirect("login")
+    auth_logout(request)
+    return redirect("login")
+
 
 def login(request):
     if request.method == "GET":
