@@ -1,12 +1,25 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.messages import constants, add_message
 
 
 def login(request):
     if request.method == "GET":
-        return HttpResponse("Login")
+        return render(request, "login.html")
+    elif request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user:
+            auth_login(request, user)
+            return HttpResponse("Usuário logado")
+
+        add_message(request, constants.ERROR, "Usuário ou senha incorretos")
+        return redirect("login")
 
 
 def create(request):
