@@ -1,9 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.messages import constants, add_message
 
+
+def logout(request):
+        auth_logout(request)
+        return redirect("login")
 
 def login(request):
     if request.method == "GET":
