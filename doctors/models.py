@@ -7,7 +7,11 @@ class Specialties(models.Model):
     icon = models.ImageField(upload_to="icons", null=True, blank=True)
 
     def __str__(self):
-        return self.especialidade
+        return self.specialty
+    
+    class Meta:
+        verbose_name = 'Especialidade'
+        verbose_name_plural = 'Especialidades'
 
 
 class Doctor(models.Model):
@@ -29,3 +33,7 @@ class Doctor(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+    class Meta:
+        verbose_name = 'Médico'
+        verbose_name_plural = 'Médicos'
