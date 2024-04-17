@@ -8,10 +8,10 @@ class Specialties(models.Model):
 
     def __str__(self):
         return self.specialty
-    
+
     class Meta:
-        verbose_name = 'Especialidade'
-        verbose_name_plural = 'Especialidades'
+        verbose_name = "Especialidade"
+        verbose_name_plural = "Especialidades"
 
 
 class Doctor(models.Model):
@@ -33,7 +33,7 @@ class Doctor(models.Model):
 
     def __str__(self):
         return self.user.username
-    
+
     class Meta:
-        verbose_name = 'Médico'
-        verbose_name_plural = 'Médicos'
+        verbose_name = "Médico"
+        verbose_name_plural = "Médicos"
