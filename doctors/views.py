@@ -1,8 +1,9 @@
+import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import add_message, constants
 from django.shortcuts import redirect, render
 
-from doctors.models import Doctor, Specialties
+from doctors.models import Appointments, Doctor, Specialties
 
 
 def _is_medico(user):
@@ -51,4 +52,31 @@ def create(request):
         add_message(
             request, constants.SUCCESS, "Cadastro médico realizado com sucesso."
         )
+        return redirect("doctors:appointments")
+
+
+@login_required
+def create_appointment(request):
+    if not _is_medico(request.user):
+        add_message(
+            request, constants.WARNING, "Somente médicos podem acessar essa página."
+        )
+        return redirect("users:logout")
+    elif request.method == "GET":
+        doctor = Doctor.objects.get(user=request.user)
+        appointments = Appointments.objects.filter(user=request.user)
+
+        return render(request, "create_appointment.html", {"doctor": doctor, "appointments": appointments})
+    elif request.method == "POST":
+        date = request.POST.get("date")
+        date_formatted = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M")
+
+        if date_formatted < datetime.datetime.now():
+            add_message(request, constants.ERROR, "A data deve ser maior ou igual a data atual.")
+            return redirect("doctors:appointments")
+
+        appointment = Appointments(date=date, user=request.user)
+        appointment.save()
+
+        add_message(request, constants.SUCCESS, "Horário cadastrado com sucesso.")
         return redirect("doctors:appointments")

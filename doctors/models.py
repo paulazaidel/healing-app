@@ -2,6 +2,19 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+class Appointments(models.Model):
+    date = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    has_patient = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.date)
+
+    class Meta:
+        verbose_name = "Consulta"
+        verbose_name_plural = "Consultas"
+
+
 class Specialties(models.Model):
     specialty = models.CharField(max_length=100)
     icon = models.ImageField(upload_to="icons", null=True, blank=True)
