@@ -9,12 +9,12 @@ from django.shortcuts import redirect, render
 
 def logout(request):
     auth_logout(request)
-    return redirect("login")
+    return redirect("users:login")
 
 
 def login(request):
     if request.method == "GET":
-        return render(request, "login.html")
+        return render(request, "users_login.html")
     elif request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -26,12 +26,12 @@ def login(request):
             return HttpResponse("Usuário logado")
 
         add_message(request, constants.ERROR, "Usuário ou senha incorretos")
-        return redirect("login")
+        return redirect("users:login")
 
 
 def create(request):
     if request.method == "GET":
-        return render(request, "create.html")
+        return render(request, "users_create.html")
     elif request.method == "POST":
         username = request.POST.get("username")
         email = request.POST.get("email")
@@ -42,21 +42,21 @@ def create(request):
 
         if users.exists():
             add_message(request, constants.ERROR, "Usuário já existe")
-            return redirect("create")
+            return redirect("users:create")
 
         if password != confirm_password:
             add_message(request, constants.ERROR, "As senhas não coincidem")
-            return redirect("create")
+            return redirect("users:create")
 
         if len(password) < 6:
             add_message(
                 request, constants.ERROR, "A senha deve possuir pelo menos 6 caracteres"
             )
-            return redirect("create")
+            return redirect("users:create")
 
         try:
             User.objects.create_user(username=username, email=email, password=password)
-            return redirect("login")
+            return redirect("users:login")
         except:
             add_message(request, constants.ERROR, "Erro ao criar usuário")
-            return redirect("create")
+            return redirect("users:create")

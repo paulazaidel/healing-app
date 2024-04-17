@@ -19,7 +19,7 @@
                     </section>
                     <hr>
                     
-                    <form action="{% url 'login' %}" method="post">
+                    <form action="{% url 'users:login' %}" method="post">
                         {% csrf_token %}
                         <h2 class="fonte-destaque1">Logar</h2>
                         {% if messages %}
@@ -41,7 +41,7 @@
                         <br>
 
                         <input type="submit" value="Logar" class="btn btn-success btn-dark-color">
-                        <a href="{% url 'create' %}" class="btn btn-dark-color-outline">Não possuo uma conta</a>
+                        <a href="{% url 'users:create' %}" class="btn btn-dark-color-outline">Não possuo uma conta</a>
                     </form>
                 </div>
 
