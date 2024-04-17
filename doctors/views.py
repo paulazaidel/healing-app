@@ -1,17 +1,19 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
 from django.contrib.messages import add_message, constants
+from django.shortcuts import redirect, render
 
 from doctors.models import Doctor, Specialties
+
 
 def _is_medico(user):
     return Doctor.objects.filter(user=user).exists()
 
+
 @login_required
 def create(request):
     if _is_medico(request.user):
-            add_message(request, constants.ERROR, 'Você já é um médico.')
-            return redirect("doctors:appointments")
+        add_message(request, constants.ERROR, "Você já é um médico.")
+        return redirect("doctors:appointments")
     elif request.method == "GET":
         specialties = Specialties.objects.all()
         return render(request, "create_doctor.html", {"specialties": specialties})
@@ -46,5 +48,7 @@ def create(request):
         )
         doctor.save()
 
-        add_message(request, constants.SUCCESS, 'Cadastro médico realizado com sucesso.')
+        add_message(
+            request, constants.SUCCESS, "Cadastro médico realizado com sucesso."
+        )
         return redirect("doctors:appointments")
