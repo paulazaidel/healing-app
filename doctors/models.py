@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -50,3 +51,8 @@ class Doctor(models.Model):
     class Meta:
         verbose_name = "Médico"
         verbose_name_plural = "Médicos"
+
+    @property
+    def next_open_date(self):
+        appointment = Appointments.objects.filter(user=self.user).filter(date__gt=datetime.datetime.now()).filter(has_patient=False).order_by('date').first()
+        return appointment.date if appointment else None
