@@ -42,7 +42,7 @@
                 <div class="row">
                     {% for appointment in appointments %}
                     <div class="col-md-3">
-                      <a class="link" href="#">
+                      <a class="link" href="{% url 'patients:new_schedule_appointment' appointment.id %}">
                         <div class='selecionar-dia'>
                           <div class="header-dias">
                             <span class="mes">
