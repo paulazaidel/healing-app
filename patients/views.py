@@ -18,3 +18,9 @@ def home(request):
 
         specialties = Specialties.objects.all()
         return render(request, "home.html", {"doctors": doctors, "specialties": specialties})
+    
+def schedule_appointment(request, doctor_id):
+    if request.method == "GET":
+        doctor = Doctor.objects.get(id=doctor_id)
+        appointments = Appointments.objects.filter(user=doctor.user, date__gte=datetime.datetime.now(), has_patient=False)
+        return render(request, "schedule_appointment.html", {"doctor": doctor, "appointments": appointments})

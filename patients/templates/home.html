@@ -53,7 +53,7 @@
                                 Sem data disponível.
                             {% endif %}
                         </p>
-                        <a href="" class="btn btn-success btn-dark-color">Agendar</a>
+                        <a href="{% url 'patients:schedule_appointment' doctor.id %}" class="btn btn-success btn-dark-color">Agendar</a>
                     </div>
                     <br>
                 {% endfor %}
