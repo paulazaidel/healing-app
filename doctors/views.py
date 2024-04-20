@@ -5,6 +5,7 @@ from django.contrib.messages import add_message, constants
 from django.shortcuts import redirect, render
 
 from doctors.models import Appointments, Doctor, Specialties
+from patients.models import PatientAppointment
 
 
 def _is_medico(user):
@@ -87,3 +88,17 @@ def create_appointment(request):
 
         add_message(request, constants.SUCCESS, "Horário cadastrado com sucesso.")
         return redirect("doctors:appointments")
+    
+def doctor_appointments(request):
+    if not _is_medico(request.user):
+        add_message(
+            request, constants.WARNING, "Somente médicos podem acessar essa página."
+        )
+        return redirect("users:logout")
+    
+    today = datetime.datetime.now()
+
+    appointments_today= PatientAppointment.objects.filter(date__user=request.user, date__date__gte=datetime.datetime.now(), date__date__lt=today + datetime.timedelta(days=1))
+    appointments = PatientAppointment.objects.exclude(id__in=appointments_today.values('id'))
+
+    return render(request, "appointments_doctor.html", {"appointments": appointments, "appointments_today": appointments_today})
