@@ -1,7 +1,11 @@
 from django.urls import path
 
-from patients.views import (appointments, home, new_schedule_appointment,
-                            schedule_appointment)
+from patients.views import (
+    appointments,
+    home,
+    new_schedule_appointment,
+    schedule_appointment,
+)
 
 app_name = "patients"
 

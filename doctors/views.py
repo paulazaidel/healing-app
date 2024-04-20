@@ -19,7 +19,11 @@ def create(request):
         return redirect("doctors:appointments")
     elif request.method == "GET":
         specialties = Specialties.objects.all()
-        return render(request, "create_doctor.html", {"specialties": specialties})
+        return render(
+            request,
+            "create_doctor.html",
+            {"specialties": specialties, "is_medico": _is_medico(request.user)},
+        )
     elif request.method == "POST":
         crm = request.POST.get("crm")
         cim = request.FILES.get("cim")
@@ -71,7 +75,11 @@ def create_appointment(request):
         return render(
             request,
             "create_appointment.html",
-            {"doctor": doctor, "appointments": appointments},
+            {
+                "doctor": doctor,
+                "appointments": appointments,
+                "is_medico": _is_medico(request.user),
+            },
         )
     elif request.method == "POST":
         date = request.POST.get("date")
@@ -111,5 +119,9 @@ def doctor_appointments(request):
     return render(
         request,
         "appointments_doctor.html",
-        {"appointments": appointments, "appointments_today": appointments_today},
+        {
+            "appointments": appointments,
+            "appointments_today": appointments_today,
+            "is_medico": _is_medico(request.user),
+        },
     )

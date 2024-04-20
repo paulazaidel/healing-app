@@ -23,7 +23,7 @@ def login(request):
 
         if user:
             auth_login(request, user)
-            return HttpResponse("Usuário logado")
+            return redirect("patients:home")
 
         add_message(request, constants.ERROR, "Usuário ou senha incorretos")
         return redirect("users:login")
