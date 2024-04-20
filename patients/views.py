@@ -53,10 +53,15 @@ def new_schedule_appointment(request, appointment_id):
 
         add_message(request, constants.SUCCESS, "Horário agendado com sucesso.")
         return redirect("patients:home")
-    
+
+
 def appointments(request):
     if request.method == "GET":
         # TODO: add filters
-        
-        appointments = PatientAppointment.objects.filter(patient=request.user, date__date__gte=datetime.datetime.now())
-        return render(request, "patient_appointments.html", {"appointments": appointments})
+
+        appointments = PatientAppointment.objects.filter(
+            patient=request.user, date__date__gte=datetime.datetime.now()
+        )
+        return render(
+            request, "patient_appointments.html", {"appointments": appointments}
+        )
