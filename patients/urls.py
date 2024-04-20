@@ -1,6 +1,6 @@
 from django.urls import path
 
-from patients.views import home, new_schedule_appointment, schedule_appointment
+from patients.views import appointments, home, new_schedule_appointment, schedule_appointment
 
 app_name = "patients"
 
@@ -15,5 +15,10 @@ urlpatterns = [
         "schedule_appointment/new/<int:appointment_id>/",
         new_schedule_appointment,
         name="new_schedule_appointment",
+    ),
+    path(
+        "schedule_appointment/",
+        appointments,
+        name="appointments",
     ),
 ]
