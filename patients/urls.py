@@ -2,6 +2,7 @@ from django.urls import path
 
 from patients.views import (
     appointments,
+    consulta,
     home,
     new_schedule_appointment,
     schedule_appointment,
@@ -25,5 +26,10 @@ urlpatterns = [
         "schedule_appointment/",
         appointments,
         name="appointments",
+    ),
+    path(
+        "consulta/<int:appointment_id>/",
+        consulta,
+        name="consulta",
     ),
 ]

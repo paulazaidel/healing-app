@@ -1,6 +1,7 @@
 import datetime
 
 from django.contrib.messages import add_message, constants
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 from doctors.models import Appointments, Doctor, Specialties
@@ -64,4 +65,16 @@ def appointments(request):
         )
         return render(
             request, "patient_appointments.html", {"appointments": appointments}
+        )
+
+
+def consulta(request, appointment_id):
+    if request.method == "GET":
+        appointment = PatientAppointment.objects.get(id=appointment_id)
+        doctor = Doctor.objects.get(user=appointment.date.user)
+        is_medico = Doctor.objects.filter(user=request.user).exists()
+        return render(
+            request,
+            "patient_consulta.html",
+            {"appointment": appointment, "doctor": doctor, "is_medico": is_medico},
         )

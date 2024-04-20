@@ -46,7 +46,7 @@
                 <tbody>
                     {% for appointment in appointments  %}
                         <tr>
-                            <td><a href="#">Dr(a). {{appointment.date.user.username}}</a></td>
+                            <td><a href="{% url 'patients:consulta' appointment.id %}">Dr(a). {{appointment.date.user.username}}</a></td>
                             <td>{{appointment.get_status_display}}</td>
                             <td>{{appointment.date.user}}</td>
                         </tr>
